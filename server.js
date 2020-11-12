@@ -8,7 +8,12 @@ var app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost/todo_list',{useNewUrlParser: true, useUnifiedTopology: true});
+const db = require('./config/keys').mongoURI;
+
+mongoose.connect(db,{useNewUrlParser: true, useUnifiedTopology: true})
+.catch(err => {
+  console.log(err);   
+});
 mongoose.connection.once('open',function(){ 
     console.log('connection made'); 
     
