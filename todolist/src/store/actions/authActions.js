@@ -1,0 +1,97 @@
+import axios from 'axios'
+import getErrors from './errorActions'
+
+export const signUp = ({ name, email, password }) => dispatch => {
+    const config = {
+        header: {
+            "Content-type": "application/json"
+        }
+    }
+
+    const body = { name, email, password };
+
+    axios.post('http://localhost:5000/api/user/register', body, config).then(res => {        
+        dispatch({
+            type: "REGISTER_SUCCESS",
+            payload: res.data
+        })
+    }).catch(err => {
+        dispatch(getErrors(err.response.data, err.response.status, "REGISTER_FAIL"));
+        dispatch({
+            type: "REGISTER_FAIL"
+        })
+    })
+}
+
+export const login = ({ email, password }) => dispatch => {    
+   
+    const config = {
+        header: {
+            "Content-Type": "application/json"
+        }
+    }
+
+    const body = { email, password };
+    
+    axios.post('http://localhost:5000/api/auth/login', body, config).then(res => {        
+        dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: res.data
+        })
+    }).catch(err => {       
+        dispatch(getErrors(err.response.data, err.response.status, "LOGIN_FAIL"))
+        dispatch({
+            type: "LOGIN_FAIL"
+        })
+    });        
+}
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: "LOGOUT_SUCCESS"
+    })
+}
+
+const tokenConfig = () => {
+    const token = localStorage.getItem('token');
+    
+    const config = {
+        header:{
+            'Content-type': 'application/json'
+        }
+    }
+    if(token)
+        config.header['authToken'] = token;
+        
+    console.log(config.header.authToken);
+    
+    return config;
+}
+
+export const loadUser = () => (dispatch, getState) => {
+    dispatch({type: "LOADING_USER" });
+    const configzz = tokenConfig();
+    
+    if(configzz.header.authToken){
+        axios.get('http://localhost:5000/api/auth/user/' + configzz.header.authToken).then(res => {
+            dispatch({
+                type: "LOAD_USER",
+                payload: res.data
+            })
+        }).catch(err => {        
+            dispatch(getErrors(err.response.data, err.response.status,"LOADUSER_FAILED"));
+            dispatch({
+                type: "AUTH_ERROR"
+            })
+        }) ;
+    }
+    else{
+        dispatch({
+            type: "AUTH_ERROR"
+        })
+    }
+    
+}
+
+
+

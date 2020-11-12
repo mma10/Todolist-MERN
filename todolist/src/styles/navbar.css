@@ -1,0 +1,20 @@
+.navbar {
+    text-align: right;
+    background-color: rgb(218, 134, 218);
+}
+
+.navbar span {
+    display: inline-block;
+    border: 1px rebeccapurple ;
+    font-size: 18px;
+    color: purple;    
+    
+    padding: 10px;
+    margin: 8px;
+}
+
+.navbar .active {
+    background-color: white;
+    font: 20px;
+    padding: 15px;
+}

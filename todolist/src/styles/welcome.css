@@ -1,0 +1,21 @@
+.welcomeContainer {
+    margin: 75px 150px;
+    text-align: center;
+    background-color: beige;
+}
+
+.welcomeText {
+    margin: 20px;
+}
+
+.welcomeButtons {
+    margin: 20px;    
+}
+
+.welcomeButtons button {
+    display: inline-block;
+    margin: 10px 20px;
+    padding: 2.7px;
+    border-radius: 5px;
+}
+

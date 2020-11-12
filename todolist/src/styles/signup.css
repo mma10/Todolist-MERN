@@ -1,0 +1,31 @@
+.signupContainer {
+    margin: 100px 425px;    
+    border: 3px blue double;
+}
+
+.signupForm {
+    margin: 35px 25px;   
+    background-color: azure; 
+}
+
+.signupForm .text {
+    margin: 20px 40px;
+    text-align: center;
+}
+
+.signupForm .text span {
+    font-size: 24px;
+
+}
+
+.signupForm .formEntity {
+    margin-left: 40px;
+    margin-top: 3px;    
+    padding: 5px;
+}
+
+.signupForm .submitButton {
+    margin: 10px 10px ;
+    padding: 5px;
+    text-align: center;
+}
