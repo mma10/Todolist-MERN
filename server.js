@@ -17,11 +17,16 @@ mongoose.connect(db,{useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.connection.once('open',function(){ 
     console.log('connection made'); 
     
-    app.all('/', function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");        
-        res.header("Access-Control-Allow-Headers", "X-Requested-With, content-type");
-        next()
-      });
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+      res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+     
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+      );
+      next();
+    });
 
     app.use('/api/item',require('./Routes/taskRoutes')); 
     app.use('/api/user',require('./Routes/userRoutes'));    

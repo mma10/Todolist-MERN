@@ -40,7 +40,7 @@ router.post('/login',(req,res) => {
 router.get('/user/:token', (req,res) => {        
     const token = req.params.token;
     //console.log(token,'token');
-    if(!token) 
+    if(token == null || token == 'null') 
         return res.status(401).json({msg: 'No token, authorisation denied from middleware'});
     
     try{
