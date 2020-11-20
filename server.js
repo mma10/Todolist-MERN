@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const auth = require('./middleware/authMiddleware')
 const path =  require('path')
-const cors = require('cors');
+//const cors = require('cors');
 
 var app = express();
 
@@ -18,18 +18,18 @@ mongoose.connect(db,{useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.connection.once('open',function(){ 
     console.log('connection made'); 
     
-    // app.use(function(req, res, next) {
-    //   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    //   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+      res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
      
-    //   res.header(
-    //     "Access-Control-Allow-Headers",
-    //     "Origin, X-Requested-With, Content-Type, Accept"
-    //   );
-    //   next();
-    // });
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+      );
+      next();
+    });
 
-    app.use(cors());
+    //app.use(cors());
 
     app.use('/api/item',require('./Routes/taskRoutes')); 
     app.use('/api/user',require('./Routes/userRoutes'));    
