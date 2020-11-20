@@ -5,14 +5,15 @@ import getErrors from './errorActions'
 export const getTasks = () => dispatch => {  
     console.log('get_tasks fun ran');
     const authToken = localStorage.getItem('token');     
-    axios.get('http://localhost:5000/api/item/' + authToken).then(res => { 
-        dispatch({  
-            type: 'GET',
-            payload: res.data.tasks
-        })
-    }).catch(err => {
-        dispatch(getErrors(err.response.data, err.response.status, "GET_TASK_FAILED"));        
-    }) 
+    axios.get('http://localhost:5000/api/item/' + authToken)
+        .then(res => { 
+            dispatch({  
+                type: 'GET',
+                payload: res.data.tasks
+            })
+        }).catch(err => {
+            dispatch(getErrors(err.response.data, err.response.status, "GET_TASK_FAILED"));        
+        }) 
 }
 
 export const addTask = task => dispatch => {

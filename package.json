@@ -4,8 +4,8 @@
   "description": "a todo list",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm install --prefix todolist",
     "start": "node server.js",
+    "client-install": "npm install --prefix todolist",
     "server": "nodemon server.js",
     "client": "npm start --prefix todolist",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
