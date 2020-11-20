@@ -9,7 +9,7 @@ var app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-const db = require('./config/keys').mongoURI;
+const db = process.env.MONGODB_URI || require('./config/keys').mongoURI;
 
 mongoose.connect(db,{useNewUrlParser: true, useUnifiedTopology: true})
 .catch(err => {
@@ -44,7 +44,7 @@ mongoose.connection.once('open',function(){
       })
     }
         
-    const port = process.env.PORT || 5000;    
+    const port = process.env.PORT || 4000;    
     
     app.listen(port);
 });

@@ -10,7 +10,7 @@ export const signUp = ({ name, email, password }) => dispatch => {
 
     const body = { name, email, password };
 
-    axios.post('http://localhost:5000/api/user/register', body)
+    axios.post('http://localhost:4000/api/user/register', body)
         .then(res => {        
             dispatch({
                 type: "REGISTER_SUCCESS",
@@ -34,7 +34,7 @@ export const login = ({ email, password }) => dispatch => {
 
     const body = { email, password };
     
-    axios.post('http://localhost:5000/api/auth/login', body)
+    axios.post('http://localhost:4000/api/auth/login', body)
         .then(res => {        
             dispatch({
                 type: "LOGIN_SUCCESS",
@@ -76,7 +76,7 @@ export const loadUser = () => (dispatch, getState) => {
     const configzz = tokenConfig();
     
     if(configzz.header.authToken){
-        axios.get('http://localhost:5000/api/auth/user/' + configzz.header.authToken)
+        axios.get('http://localhost:4000/api/auth/user/' + configzz.header.authToken)
             .then(res => {
                 dispatch({
                     type: "LOAD_USER",
