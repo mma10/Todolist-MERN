@@ -8,18 +8,18 @@ const Task = require('../models/taskSchema')
 const User = require('../models/userSchema')
 const auth = require('../middleware/authMiddleware')
 
-router.get('/:token', auth, function(req,res){      
+router.get('/:token', auth, function(req,res){ 
     User.findById(req.user.id).then(user => {
-        if(!user) return res.status(400).json({ msg: "No user, authentication denied" });        
+        if(!user) return res.status(401).json({ msg: "No user, authentication denied" });        
         res.json({
             tasks: user.tasks
         });
     });       
 });   
 
-router.post('/:token', auth,function(req,res){  
+router.post('/:token', auth, function(req,res){  
     User.findById(req.user.id).then(user => {
-        if(!user) return res.json.status(400).json({ msg: "please login to perform the task" });
+        if(!user) return res.json.status(401).json({ msg: "please login to perform the task" });
 
         const updatedUser = user;
 
@@ -37,6 +37,8 @@ router.post('/:token', auth,function(req,res){
 
 router.delete('/:token/:id', auth, function(req,res){
     User.findById(req.user.id).then(user => {
+        if(!user) return res.json.status(401).json({ msg: "please login to perform the task" });
+
         Task.deleteOne({ _id: req.params.id }).catch((err) => {
             res.status(400).json({msg: 'Failed to delete from task'});
         });  
@@ -50,11 +52,14 @@ router.delete('/:token/:id', auth, function(req,res){
 }); 
 
 router.put('/:token/:id', auth, function(req,res){
+    if(!req.user.id)
+        return res.json.status(401).json({ msg: "please login to perform the task" });
+
     Task.findOneAndUpdate({ _id: req.params.id }, { item: req.body.item })
     .catch(err => {
         res.status(400).json({ msg: "failed to update the task"});
     });
-
+    
     User.updateOne({ _id: req.user.id, "tasks._id": req.params.id }, { $set: { "tasks.$.item": req.body.item } })
     .then(() => {        
         res.json();

@@ -3,7 +3,7 @@ import $ from 'jquery'
 import getErrors from './errorActions'
 
 export const getTasks = () => dispatch => {  
-    console.log('get_tasks fun ran');
+    //console.log('get_tasks fun ran');
     const authToken = localStorage.getItem('token');     
     axios.get('http://localhost:4000/api/item/' + authToken)
         .then(res => { 

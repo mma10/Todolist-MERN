@@ -28,7 +28,7 @@ router.post('/register',(req,res) => {
                 if(err) throw err;
                 newUser.password = hash;
                 newUser.save().then( user => {
-                    jwt.sign({id: user.id}, "myJWTSecret", { expiresIn: '365d' }, (err, token) => {
+                    jwt.sign({id: user.id}, process.env.JWT_KEY || "myJWTSecret", { expiresIn: '365d' }, (err, token) => {
                         if(err) throw err;
                         res.json({        
                             token,                    

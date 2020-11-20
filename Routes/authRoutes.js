@@ -14,12 +14,12 @@ router.post('/login',(req,res) => {
         return res.status(400).json({msg: 'Enter all fields'});    
     
     User.findOne({email}).then( user => {
-        if(!user) return res.status(400).json({msg: 'invalid email'});
+        if(!user) return res.status(401).json({msg: 'invalid email'});
         
         bcrypt.compare(password, user.password).then( isMatch => {
-            if(!isMatch) return res.status(400).json({msg: 'incorrect password'});
+            if(!isMatch) return res.status(401).json({msg: 'incorrect password'});
 
-            jwt.sign({id: user._id}, "myJWTSecret", { expiresIn: 3600 }, (err, token) => {
+            jwt.sign({id: user._id}, process.env.JWT_KEY || "myJWTSecret", { expiresIn: 3600 }, (err, token) => {
                 if(err) throw err;                
                 res.json({        
                     token,                    
@@ -40,13 +40,14 @@ router.post('/login',(req,res) => {
 router.get('/user/:token', (req,res) => {        
     const token = req.params.token;
     //console.log(token,'token');
-    if(token == null || token == 'null') 
+    if(token == null || token == 'null' || token == 'undefined') 
         return res.status(401).json({msg: 'No token, authorisation denied from middleware'});
     
     try{
-        const decoded = jwt.verify(token, "myJWTSecret");    
+        const decoded = jwt.verify(token, process.env.JWT_KEY || "myJWTSecret");    
         req.user = decoded;                        
-    } catch(err){
+    } 
+    catch(err){
         res.status(400).json({msg: 'invalid token'});
     }
     
