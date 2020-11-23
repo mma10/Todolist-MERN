@@ -10,7 +10,7 @@ export const signUp = ({ name, email, password }) => dispatch => {
 
     const body = { name, email, password };
 
-    axios.post('http://localhost:4000/api/user/register', body)
+    axios.post('/api/user/register', body)
         .then(res => {        
             dispatch({
                 type: "REGISTER_SUCCESS",
@@ -24,17 +24,10 @@ export const signUp = ({ name, email, password }) => dispatch => {
         })
 }
 
-export const login = ({ email, password }) => dispatch => {    
-   
-    // const config = {
-    //     header: {
-    //         "Content-Type": "application/json"
-    //     }
-    // }
-
+export const login = ({ email, password }) => dispatch => {        
     const body = { email, password };
     
-    axios.post('http://localhost:4000/api/auth/login', body)
+    axios.post('/api/auth/login', body)
         .then(res => {        
             dispatch({
                 type: "LOGIN_SUCCESS",
@@ -55,28 +48,13 @@ export const logout = () => dispatch => {
     })
 }
 
-const tokenConfig = () => {
-    const token = localStorage.getItem('token');
-    
-    const config = {
-        header:{
-            'Content-type': 'application/json'
-        }
-    }
-    if(token)
-        config.header['authToken'] = token;
-        
-    console.log(config.header.authToken);
-    
-    return config;
-}
 
 export const loadUser = () => (dispatch, getState) => {
     dispatch({type: "LOADING_USER" });
     const configzz = tokenConfig();
     
     if(configzz.header.authToken){
-        axios.get('http://localhost:4000/api/auth/user/' + configzz.header.authToken)
+        axios.get('/api/auth/user/' + configzz.header.authToken)
             .then(res => {
                 dispatch({
                     type: "LOAD_USER",
@@ -94,8 +72,23 @@ export const loadUser = () => (dispatch, getState) => {
         dispatch({
             type: "AUTH_ERROR"
         })
-    }
+    }    
+}
+
+const tokenConfig = () => {
+    const token = localStorage.getItem('token');
     
+    const config = {
+        header:{
+            'Content-type': 'application/json'
+        }
+    }
+    if(token)
+        config.header['authToken'] = token;
+        
+    console.log(config.header.authToken);
+    
+    return config;
 }
 
 

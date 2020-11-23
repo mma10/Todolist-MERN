@@ -5,7 +5,7 @@ import getErrors from './errorActions'
 export const getTasks = () => dispatch => {  
     //console.log('get_tasks fun ran');
     const authToken = localStorage.getItem('token');     
-    axios.get('http://localhost:4000/api/item/' + authToken)
+    axios.get('/api/item/' + authToken)
         .then(res => { 
             dispatch({  
                 type: 'GET',
@@ -18,7 +18,7 @@ export const getTasks = () => dispatch => {
 
 export const addTask = task => dispatch => {
     const token = localStorage.getItem('token');
-    axios.post('http://localhost:4000/api/item/' + token,task).then(res => {
+    axios.post('/api/item/' + token,task).then(res => {
         dispatch({
             type: "ADD",
             payload: res.data
@@ -31,7 +31,7 @@ export const addTask = task => dispatch => {
 export const updateTask = (oldTask, newTask, id, e) => dispatch => {
     console.log(oldTask,newTask);
     const token = localStorage.getItem('token');
-    axios.put('http://localhost:4000/api/item/' + token + '/' + id, newTask).then((res) => {                
+    axios.put('/api/item/' + token + '/' + id, newTask).then((res) => {                
         dispatch({
             type: "UPDATE",    
             id,        
@@ -48,7 +48,7 @@ export const updateTask = (oldTask, newTask, id, e) => dispatch => {
 export const deleteTask = id => dispatch => {
     const token = localStorage.getItem('token');
     console.log('delete fun run');
-    axios.delete('http://localhost:4000/api/item/' + token + '/' + id ).then(res => {       
+    axios.delete('/api/item/' + token + '/' + id ).then(res => {       
         dispatch({
             type: "DELETE",
             id           
