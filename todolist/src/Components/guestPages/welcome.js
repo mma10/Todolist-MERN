@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import propTypes from 'prop-types'
 import '../../styles/welcome.css'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
 
 class Welcome extends Component {
+    static propTypes = {
+        auth: propTypes.object.isRequired
+    }
+
     render() {
+        if(this.props.auth.authenticated == true)
+            this.props.history.push('/dashboard');
+
         return (
             <div className="welcomePage">
                 <div className="welcomeContainer">
@@ -20,12 +28,17 @@ class Welcome extends Component {
                         <Link to='/login'>
                             <button type="submit">LOGIN</button>
                         </Link>
-                    </div>   
-                    
+                    </div> 
                 </div>
             </div>           
         )
     }
 }
 
-export default Welcome;
+const MapStateToProps = (state) => {
+    return {
+      auth: state.auth
+    }
+}
+
+export default connect(MapStateToProps)(Welcome);

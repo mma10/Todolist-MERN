@@ -1,18 +1,30 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import propTypes from 'prop-types'
 import { Link, NavLink } from 'react-router-dom'
 import '../../styles/navbar.css'
-import SignUp from '../auth/signUp'
-import Login from '../auth/login'
 import Logout from '../auth/logout'
 
-const Navbar = () => {
-    return (
-        <div className="navbar">
+class Navbar extends Component {
+    static propTypes = {
+        auth: propTypes.object.isRequired
+    }
+
+    render () {
+        const authLinks = ( 
             <div className="navbarContainer">
                 <NavLink to="/dashboard">
                     <span>DASHBOARD</span>
                 </NavLink>
-
+                
+                <Link to="/">
+                    <Logout />
+                </Link>
+            </div>
+        );
+        
+        const guestLinks = (
+            <div className="navbarContainer">
                 <NavLink to="/signup">
                     <span>SIGNUP</span>
                 </NavLink>
@@ -20,14 +32,21 @@ const Navbar = () => {
                 <NavLink to="/login">
                     <span>LOGIN</span>
                 </NavLink>
-                
-                <Link to="/">
-                    <Logout />
-                </Link>                
             </div>
-        </div>
-    )
-
+        )        
+        
+        return (     
+            <div className="navbar">    
+                { localStorage.getItem('token') ? authLinks : guestLinks }
+            </div>
+        )    
+    }    
 }
 
-export default Navbar;
+const MapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+export default connect(MapStateToProps)(Navbar);

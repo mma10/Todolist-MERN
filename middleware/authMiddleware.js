@@ -10,10 +10,9 @@ function auth(req, res, next) {
     
     try{
         const decoded = jwt.verify(token, process.env.JWT_KEY || "myJWTSecret");  
-        if(!decoded)
-            res.status(401).json({ msg: "Authentication denied" });      
-        req.user = decoded;  
-        console.log(decoded,'this is decoded');                        
+        if(!decoded || decoded == 'null' || decoded == 'undefined')
+            res.status(401).json({ msg: "Invalid token, Authentication denied" });      
+        req.user = decoded;                                  
     }
     catch(err){
         res.status(401).json({msg: 'invalid token'});

@@ -1,6 +1,7 @@
 .navbar {
     text-align: right;
     background-color: rgb(218, 134, 218);
+    margin-bottom: 10px;
 }
 
 .navbar span {

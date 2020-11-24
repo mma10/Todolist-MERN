@@ -2,8 +2,7 @@ import axios from 'axios'
 import $ from 'jquery'
 import getErrors from './errorActions'
 
-export const getTasks = () => dispatch => {  
-    //console.log('get_tasks fun ran');
+export const getTasks = () => dispatch => { 
     const authToken = localStorage.getItem('token');     
     axios.get('/api/item/' + authToken)
         .then(res => { 
@@ -29,9 +28,8 @@ export const addTask = task => dispatch => {
 }
 
 export const updateTask = (oldTask, newTask, id, e) => dispatch => {
-    console.log(oldTask,newTask);
     const token = localStorage.getItem('token');
-    axios.put('/api/item/' + token + '/' + id, newTask).then((res) => {                
+    axios.put('/api/item/' + token + '/' + id, newTask).then(res => {                
         dispatch({
             type: "UPDATE",    
             id,        
@@ -47,7 +45,6 @@ export const updateTask = (oldTask, newTask, id, e) => dispatch => {
 
 export const deleteTask = id => dispatch => {
     const token = localStorage.getItem('token');
-    console.log('delete fun run');
     axios.delete('/api/item/' + token + '/' + id ).then(res => {       
         dispatch({
             type: "DELETE",
@@ -57,22 +54,3 @@ export const deleteTask = id => dispatch => {
         dispatch(getErrors(err.response.data, err.response.status,"GET_ERROR"));
     })
 }
-
-export const tokenConfig = () => {
-    //console.log('tokenConfig func ran!')
-    const token = localStorage.getItem('token');  
-    //console.log(token,'token')  
-
-    const config = {
-        headers: {            
-            token: token
-        }
-    }
-    // if(token){
-    //     config.headers["token"] = token;
-    // }
-    //console.log(config.headers.token,'config.headers...')        
-    return config;
-}
-
-
