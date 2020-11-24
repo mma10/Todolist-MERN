@@ -74,6 +74,7 @@ class Login extends Component {
                         <p>{ this.props.error.msg.msg }</p>
                         </div> : null }                
                 </div>
+                
                 <Loading/> 
             </div>           
         );

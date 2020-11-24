@@ -9,7 +9,6 @@ import Dashboard from './Components/main/dashboard/dashboard'
 import Welcome from './Components/guestPages/welcome'
 import SignUp from './Components/auth/signUp'
 import Login from './Components/auth/login'
-import Loading from './Components/auth/loading'
 
 class App extends Component {
   componentDidMount() {    

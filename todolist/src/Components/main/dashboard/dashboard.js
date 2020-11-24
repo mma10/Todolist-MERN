@@ -18,11 +18,11 @@ class Dashboard extends Component{
         if(localStorage.getItem('token'))        
             return (
                 <div className="welcome">
-                    <Header />
+                    <Header user = { this.props.auth.user}/>
                     <main>                
                         <SearchBox />
                         <ul className="list">
-                            <TaskList task={this.props.task} />
+                            <TaskList task = { this.props.task } />
                         </ul>
                         <HideTask />
                         <AddTask />

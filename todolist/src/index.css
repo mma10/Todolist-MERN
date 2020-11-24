@@ -18,6 +18,10 @@ body {
     width: 80%;
     margin: auto;
   }
+
+  header h3 span {
+    color: blueviolet;
+  }
   
   header h1{
     text-align: center;
