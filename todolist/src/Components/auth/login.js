@@ -7,6 +7,17 @@ import Loading from './loading'
 import $ from 'jquery'
 
 class Login extends Component {
+    componentDidMount () {
+        if(this.props.auth.loading == true){
+            $('.loading').css("display","block");
+            $('.loginContainer').css("display","none");
+        }
+        else{
+            $('.loading').css("display","none");
+            $('.loginContainer').css("display","block");
+        }
+    }
+
     state = {        
         email: '',
         password: ''       
